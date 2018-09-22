@@ -1,0 +1,11 @@
+version: "2"
+
+services:
+  express:
+    build:
+      context: docker
+    command: bash -c "yarn && DEBUG=server:* pm2-runtime start process.json"
+    ports:
+      - "${EXPRESS_PORT}:3000"
+    volumes:
+      - ./server:/usr/src/app
