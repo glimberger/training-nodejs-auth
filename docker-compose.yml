@@ -3,9 +3,18 @@ version: "2"
 services:
   express:
     build:
-      context: docker
+      context: docker/express
     command: bash -c "yarn && DEBUG=server:* pm2-runtime start process.json"
     ports:
       - "${EXPRESS_PORT}:3000"
     volumes:
       - ./server:/usr/src/app
+
+  mongo:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+    volumes:
+      - ./docker/mongodb/data/db:/data/db
